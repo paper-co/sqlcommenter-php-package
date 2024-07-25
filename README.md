@@ -1,22 +1,41 @@
-## sqlcommenter
+# Sqlcommenter-laravel
 
-**sqlcommenter is donated to [OpenTelemetry](https://opentelemetry.io/). We will continue to maintain this repository until opentelemetry SQLCommenter feature stabilizes. Further updates will be added here in due time. See the migration plans in [this comment](https://github.com/open-telemetry/opentelemetry-java-contrib/issues/205#issuecomment-1018136934). **
+Sqlcommenter is a plugin/middleware/wrapper to augment SQL statements from laravel
+with comments that can be used later to correlate user code with SQL statements.
 
-[Documentation](https://google.github.io/sqlcommenter/)
+## Installation
 
-Contains all the various `sqlcommenter-*` implementations.
+```shell
+composer require "google/sqlcommenter-laravel"
+```
+## Usage
 
-- [X] [Python](python/sqlcommenter-python/README.md)
-  - [X] [django](python/sqlcommenter-python/README.md#django)
-  - [X] [psycopg2](python/sqlcommenter-python/README.md#psycopg2)
-  - [X] [sqlalchemy](python/sqlcommenter-python/README.md#sqlalchemy)
-- [X] [Java](java/sqlcommenter-java/README.md)
-  - [X] [Hibernate](java/sqlcommenter-java/README.md#hibernate)
-  - [X] [Spring+Hibernate](java/sqlcommenter-java/README.md#spring-hibernate)
-- [X] Ruby
-  - [X] [Rails](ruby/sqlcommenter-ruby/sqlcommenter_rails/README.md)
-- [X] [Node.js](nodejs/sqlcommenter-nodejs/README.md)
-  - [X] [Knex.js](nodejs/sqlcommenter-nodejs/packages/sqlcommenter-knex/README.md)
-  - [X] [Sequelize.js](nodejs/sqlcommenter-nodejs/packages/sqlcommenter-sequelize/README.md)
-- [X] Php
-  - [X] [Laravel](php/sqlcommenter-php/packages/sqlcommenter-laravel)
+Publish the config file from library to into laravel app using below command
+
+```shell
+php artisan vendor:publish --provider="Google\GoogleSqlCommenterLaravel\GoogleSqlCommenterServiceProvider"
+```
+
+Add the following class above `Illuminate\Database\DatabaseServiceProvider::class`,
+ in `config/app.php`
+```php
+'providers' => [
+    ...
+    Google\GoogleSqlCommenterLaravel\Database\DatabaseServiceProvider::class,
+    Illuminate\Database\DatabaseServiceProvider::class,
+    ...
+]
+```
+
+## Options
+
+With Laravel SqlCommenter, we have configuration to choose which tags to be appended to the comment. It is configurable in `config/google_sqlcommenter.php`
+
+| Field         | Included <br /> by default?                    | Description                                                                                                                 |
+| ------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `action`      | <div style="text-align: center">&#10004;</div> | The [application namespace](https://laravel.com/docs/9.x/controllers) of the matching URL pattern in your routes/api.php    |
+| `controller`  | <div style="text-align: center">&#10004;</div> | The [name](https://laravel.com/docs/9.x/controllers) of the matching URL pattern as described in your routes/api.php        |
+| `db_driver`   | <div style="text-align: center">&#10004;</div> | The name of the php [database engine](https://laravel.com/docs/9.x/database)                                                |
+| `framework`   | <div style="text-align: center">&#10004;</div> | The word "laravel" and the version of laravel being used                                                                    |
+| `route`       | <div style="text-align: center">&#10004;</div> | The [route](https://laravel.com/docs/9.x/routing) of the matching URL pattern as described in your routes/api.php           |
+| `traceparent` | <div style="text-align: center">&#10004;</div> | The [W3C TraceContext.Traceparent field](https://www.w3.org/TR/trace-context/#traceparent-field) of the OpenTelemetry trace |
