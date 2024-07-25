@@ -1,3 +1,2 @@
-php/sqlcommenter-php/packages/sqlcommenter-laravel/vendor/*
-.idea/**
-.DS_Store
+/vendor
+/.idea
