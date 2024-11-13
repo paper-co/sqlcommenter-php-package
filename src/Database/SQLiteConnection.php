@@ -24,6 +24,7 @@ use Illuminate\Database\Schema\Grammars\SQLiteGrammar as SchemaGrammar;
 use Illuminate\Database\Schema\SQLiteBuilder;
 use Illuminate\Database\Schema\SqliteSchemaState;
 use Illuminate\Filesystem\Filesystem;
+use PaperCo\Correlation\CorrelationManager;
 
 class SQLiteConnection extends Connection
 {
@@ -36,9 +37,9 @@ class SQLiteConnection extends Connection
      * @param  array  $config
      * @return void
      */
-    public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
+    public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [], ?CorrelationManager $correlationManager)
     {
-        parent::__construct($pdo, $database, $tablePrefix, $config);
+        parent::__construct($pdo, $database, $tablePrefix, $config, $correlationManager);
 
         $enableForeignKeyConstraints = $this->getForeignKeyConstraintsConfigurationValue();
 

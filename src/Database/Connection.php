@@ -21,10 +21,20 @@ use Illuminate\Database\Connection as BaseConnection;
 use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
 use Google\GoogleSqlCommenterLaravel\Opentelemetry;
 use Google\GoogleSqlCommenterLaravel\Utils;
+use PaperCo\Correlation\CorrelationManager;
 
 
 class Connection extends BaseConnection
 {
+    private ?CorrelationManager $correlationManager;
+
+    public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [], ?CorrelationManager $correlationManager)
+    {
+        parent::__construct($pdo, $database, $tablePrefix, $config);
+
+        $this->correlationManager = $correlationManager;
+    }
+
     /**
      * @inheritDoc
      */
@@ -67,10 +77,24 @@ class Connection extends BaseConnection
             $comments = $comments + $carrier;
         }
 
+        if (config("{$configurationKey}.correlation_id", true)) {
+            $comments = $this->appendCorrelationId($comments);
+        }
+
         $query = trim($query);
         $hasSemicolon = $query[-1] === ';';
         $query = rtrim($query, ';');
 
         return $query . Utils::formatComments(array_filter($comments)) . ($hasSemicolon ? ';' : '');
+    }
+
+    private function appendCorrelationId(array $comments): array
+    {
+        if (null !== $this->correlationManager) {
+            $comments['correlation_id'] = $this->correlationManager->getCorrelationId();
+            $comments['correlation_fragments'] = implode(',', $this->correlationManager->getFragments());
+        }
+
+        return $comments;
     }
 }

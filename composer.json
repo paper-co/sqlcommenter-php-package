@@ -3,6 +3,12 @@
   "description": "SQLCommenter implementation for Laravel. SQLCommenter is a set of tools that augments SQL Statements with comments containing information about the code that caused its execution. These information can be action, controller, framework, db_driver, route and opentelemetry traceparent.",
   "type": "library",
   "license": "MIT",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://paper-build-php-package-repository.storage.googleapis.com/"
+    }
+  ],
   "authors": [
     {
       "name": "Google Developers",
@@ -32,6 +38,9 @@
     "format": "phpcbf --standard=psr2 src/"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.5",
+    "paper-co/correlation": "^0.6.0",
+    "illuminate/support": "^10.48",
+    "illuminate/database": "^10.38"
   }
 }

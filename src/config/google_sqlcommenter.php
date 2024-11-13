@@ -13,6 +13,7 @@ return [
         'db_driver' => true,
         'opentelemetry' => true,
         'action' => true,
+        'correlation_id' => true,
     ]
 
 ];
