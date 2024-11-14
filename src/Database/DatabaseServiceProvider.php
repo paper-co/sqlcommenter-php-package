@@ -18,6 +18,7 @@
 namespace Google\GoogleSqlCommenterLaravel\Database;
 
 use Illuminate\Support\ServiceProvider;
+use PaperCo\Correlation\CorrelationManager;
 
 class DatabaseServiceProvider extends ServiceProvider
 {
@@ -29,20 +30,24 @@ class DatabaseServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Connection::resolverFor('mysql', function ($connection, $database, $prefix, $config) {
-            return new MySqlConnection($connection, $database, $prefix, $config);
+        $correlationManager = $this->app->has(CorrelationManager::class)
+            ? $this->app->make(CorrelationManager::class)
+            : null;
+
+        Connection::resolverFor('mysql', function ($connection, $database, $prefix, $config) use ($correlationManager) {
+            return new MySqlConnection($connection, $database, $prefix, $config, $correlationManager);
         });
 
-        Connection::resolverFor('pgsql', function ($connection, $database, $prefix, $config) {
-            return new PostgresConnection($connection, $database, $prefix, $config);
+        Connection::resolverFor('pgsql', function ($connection, $database, $prefix, $config) use ($correlationManager) {
+            return new PostgresConnection($connection, $database, $prefix, $config, $correlationManager);
         });
 
-        Connection::resolverFor('sqlite', function ($connection, $database, $prefix, $config) {
-            return new SQLiteConnection($connection, $database, $prefix, $config);
+        Connection::resolverFor('sqlite', function ($connection, $database, $prefix, $config) use ($correlationManager) {
+            return new SQLiteConnection($connection, $database, $prefix, $config, $correlationManager);
         });
 
-        Connection::resolverFor('sqlsrv', function ($connection, $database, $prefix, $config) {
-            return new SqlServerConnection($connection, $database, $prefix, $config);
+        Connection::resolverFor('sqlsrv', function ($connection, $database, $prefix, $config) use($correlationManager) {
+            return new SqlServerConnection($connection, $database, $prefix, $config, $correlationManager);
         });
     }
 }
