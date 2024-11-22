@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a23a50ddac3f30bd6cecd8810f1c9117",
+    "content-hash": "29b3f3e736349e3729788eef2a2ed0cb",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -2083,16 +2083,16 @@
         },
         {
             "name": "paper-co/correlation",
-            "version": "v0.6.0",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:paper-co/correlation-php-package.git",
-                "reference": "9dc8b65b18b96f6d00adf93b59c1f94f3e13c441"
+                "reference": "55449fb33f299e2291d7fd45e7501b3eb16be8f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paper-co/correlation-php-package/zipball/9dc8b65b18b96f6d00adf93b59c1f94f3e13c441",
-                "reference": "9dc8b65b18b96f6d00adf93b59c1f94f3e13c441",
+                "url": "https://api.github.com/repos/paper-co/correlation-php-package/zipball/55449fb33f299e2291d7fd45e7501b3eb16be8f8",
+                "reference": "55449fb33f299e2291d7fd45e7501b3eb16be8f8",
                 "shasum": ""
             },
             "require": {
@@ -2107,6 +2107,7 @@
                 "psalm/plugin-laravel": "^2.8",
                 "psalm/plugin-mockery": "^1.1",
                 "psalm/plugin-phpunit": "^0.18.4",
+                "saloonphp/saloon": "^3",
                 "vimeo/psalm": "^5.8"
             },
             "type": "library",
@@ -2132,10 +2133,10 @@
             ],
             "description": "description",
             "support": {
-                "source": "https://github.com/paper-co/correlation-php-package/tree/v0.6.0",
+                "source": "https://github.com/paper-co/correlation-php-package/tree/v0.8.0",
                 "issues": "https://github.com/paper-co/correlation-php-package/issues"
             },
-            "time": "2024-11-13T16:44:19+00:00"
+            "time": "2024-11-21T21:27:43+00:00"
         },
         {
             "name": "phar-io/manifest",
